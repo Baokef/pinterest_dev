@@ -42,7 +42,7 @@ class Pin
     {
         return $this->title;
     }
-
+    // Salut les gars
     public function setTitle(string $title): self
     {
         $this->title = $title;
