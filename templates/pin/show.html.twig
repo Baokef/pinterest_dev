@@ -4,6 +4,8 @@
 
     <article>
          <h1>{{ pin.title }}</h1>
+<img src={{pin.imageName}} width="200" height="300">
+
         <p>{{ pin.description }}</p>
         <p>Submitted {{ pin.createdAt|date }}</p>
         <p>last modification  {{ pin.updatedAt|date }}</p>
