@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Traits\Timestampable;
 
 /**
- * @ORM\Entity(repositoryClass=PinRepository::class)
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
  */

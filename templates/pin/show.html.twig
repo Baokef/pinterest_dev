@@ -9,6 +9,10 @@
         <p>{{ pin.description }}</p>
         <p>Submitted {{ pin.createdAt|date }}</p>
         <p>last modification  {{ pin.updatedAt|date }}</p>
+<p>By
+	{{pin.user.firstname~" "~pin.user.lastname }}
+</p>
+
     </article>
        <a href="{{ path('app_pin_edit', {id: pin.id}) }}">Edit Pin | </a>
 <a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-pin-delete-form').submit();">Delete |

@@ -13,7 +13,9 @@
 <img src={{pin.imageName}} width="150" height="200">
 
                <p>{{ pin.description|u.truncate(10,'...',false) }}</p> 
-               <p>il y'a {{ pin.createdAt|ago }}</p>      
+               <p>il y'a {{ pin.createdAt|ago }}</p> 
+               <p>By {{pin.user.firstname~" "~pin.user.lastname }} </p>
+
              
         </article>
     {% else %}
