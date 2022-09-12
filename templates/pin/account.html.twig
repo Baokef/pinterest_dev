@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}pin Center!
+{% endblock %}
+
+{% block body %}
+
+
+	{% for pin in pins  %}
+		{% if app.user.id == pin.user.id  %}
+			<div class="row">
+				<div class="col-4">
+					<article class="title">
+
+						<h3>
+							<a href="{{ path('app_pin_show', {id: pin.id})}}">{{pin.title|u.truncate(30,'...',false)}}
+							</h3>
+							<img src={{pin.imageName}} width="200" height="200">
+
+							<h5>
+								<a>{{ pin.description|u.truncate(15,'...',false) }}</a>
+							</h5>
+							<p>voir la description complète
+								<a>{{pin.title}}</p>
+							</p>
+							<p>il y'a
+								{{ pin.createdAt|ago }}</p>
+							<p>By
+								{{pin.user.firstname~" "~pin.user.lastname }}
+							</p>
+							<p>
+								edité il y'a
+								{{ pin.updatedAt|ago }}
+							</p>
+						</article>
+
+
+					{% endif %}
+				</div>
+			</div>
+
+
+		{% endfor %}
+	</div>
+	
+
+</div><br>
+{% endblock %}

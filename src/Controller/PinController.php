@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Pin;
 use App\Repository\PinRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\VideoRepository;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,6 +56,21 @@ class PinController extends AbstractController
         return $this->render('pin/index.html.twig', ['pins' => $repo->findAll()]);
     }
     /**
+     * @Route("/pin/account", name="app_pin_account", methods= {"GET","POST"})
+     */
+    public function account(ManagerRegistry $doctrine, PinRepository $repo): Response
+    {
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'already connected !');
+            return $this->redirectToRoute('app_login');
+        } {
+
+            return $this->render('pin/account.html.twig', [
+                'pins' => $repo->findAll(),
+            ]);
+        }
+    }
+    /**
      * @Route("/pin/{id<[0-9]+>}", name="app_pin_show", methods="GET")
      */
     public function show(Pin $pin): Response
@@ -65,10 +82,21 @@ class PinController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
+        if ($this->getUser()) {
+            if ($this->getUser()->isVerified() == false) {
+                $this->addFlash('error', 'You must confirm your email to create Pin!');
+                return $this->redirectToRoute('app_home');
+            }
+        } else {
+            $this->addFlash('error', 'You must login to create Pin!');
+            return $this->redirectToRoute('app_login');
+        }
+
         $pin = new Pin;
         $form = $this->createForm(PinType::class, $pin);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $pin->setUser($this->getUser());
             $em->persist($pin);
             $em->flush();
             $this->addFlash('success', 'pin successfully created !');
@@ -82,6 +110,18 @@ class PinController extends AbstractController
 
     public function edit(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
+        if ($this->getUser()) {
+            if ($this->getUser()->isVerified() == false) {
+                $this->addFlash('error', 'You must confirm your email to edit Pin!');
+                return $this->redirectToRoute('app_home');
+            } else if ($pin->getUser()->getEmail() !== $this->getUser()->getEmail()) {
+                $this->addFlash('error', 'You must to be the user ' . $pin->getUser()->getFirstname() . ' to edit Pin !');
+                return $this->redirectToRoute('app_home');
+            }
+        } else {
+            $this->addFlash('error', 'You must login to edit Pin!');
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(PinType::class, $pin);
         $form->handleRequest($request);
 
@@ -101,6 +141,18 @@ class PinController extends AbstractController
      */
     public function delete(Pin $pin, EntityManagerInterface $em): Response
     {
+        if ($this->getUser()) {
+            if ($this->getUser()->isVerified() == false) {
+                $this->addFlash('error', 'You must confirm your email to delete Pin!');
+                return $this->redirectToRoute('app_home');
+            } else if ($pin->getUser()->getEmail() !== $this->getUser()->getEmail()) {
+                $this->addFlash('error', 'You must to be the user ' . $pin->getUser()->getFirstname() . ' to delete this Pin !');
+                return $this->redirectToRoute('app_home');
+            }
+        } else {
+            $this->addFlash('error', 'You must login to delete this Pin!');
+            return $this->redirectToRoute('app_login');
+        }
         $em->remove($pin);
         $em->flush();
         $this->addFlash('info', 'pin successfully deleted !');

@@ -12,17 +12,26 @@
 <p>By
 	{{pin.user.firstname~" "~pin.user.lastname }}
 </p>
+</article>
+{% if pin.user==app.user   %}
 
-    </article>
        <a href="{{ path('app_pin_edit', {id: pin.id}) }}">Edit Pin | </a>
-<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-pin-delete-form').submit();">Delete |
+       <a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-pin-delete-form').submit();">Delete |</a>
+       <a href="{{ path('app_home') }}">Go Back</a>
+       <form id="js-pin-delete-form" action="{{ path('app_pin_delete', {id: pin.id}) }}" method="post" style="display:none;">
+            <input type="hidden" name="_method" value="DELETE">
+       </form>
+{% else %}
+<p>
+	Sorry, you need to be connected for edit.
+</p>
+<a href="{{ path('app_home') }}">
+	<form>
+		<input type="button" value="Go Back" onclick="">
+	</form>
 </a>
 
-<a href="{{ path('app_home') }}">Go Back</a>
-
-<form id="js-pin-delete-form" action="{{ path('app_pin_delete', {id: pin.id}) }}" method="post" style="display:none;">
-	<input type="hidden" name="_method" value="DELETE">
-</form>
+{% endif %}
 
        
 {% endblock %}

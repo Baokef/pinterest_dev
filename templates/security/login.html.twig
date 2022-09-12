@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+{# <div style="text-align:center"> #}
+
 <div class="row">
 	<div class="col-md-6 mx-auto">
 
@@ -12,8 +14,7 @@
 		{% if error %}
 			<div class="alert alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
-
-		{% if app.user %}
+         {% if app.user %}
 			<div class="mb-3">
 				You are logged in as
 				{{ app.user.username }},
@@ -34,7 +35,7 @@
 				
 			</a>
 <div>
-	<p class="text-center">Not registered yet ?<a href="#">Create an Account</a>
+	<p class="text-center">Not registered yet ?<a href={{ path('app_register') }}>Create an Account</a>
 	</p>
 </div>
 

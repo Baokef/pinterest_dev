@@ -39,7 +39,7 @@ class PinRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Pin $entity, bool $flush = true): void
+    public function remove(Pin $entity, bool $flush = false): void
     {
         $this->_em->remove($entity);
         if ($flush) {
