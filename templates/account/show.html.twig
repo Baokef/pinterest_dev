@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AccountController!
+
+{% endblock %}
+
+{% block body %}
+
+	
+
+
+
+		<div class="row">
+
+			<div class="col-4 text-center">
+            <h1> Profile</h1>
+<img src={{app.user.photo}} width="200" height="300">
+
+
+
+<p>{{ app.user.email }}</p>
+<h2>{{ app.user.firstname ~" "~ app.user.lastname }}</h2>
+<p>Account created on
+	{{ app.user.createdAt|date }}</p>
+
+
+	<div class="edit">
+<a href="{{ path('app_account_edit')}}">Editer</a>
+
+		<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-account-delete-form').submit();">Delete |</a>
+		<a href="{{ path('app_home') }}">Go Back</a>
+	 <form id="js-account-delete-form" action="{{ path('app_account_delete', {id: app.user.id}) }}" method="post" style="display:none;">
+			<input type="hidden" name="_method" value="DELETE">
+		</form> 
+	</div>
+
+
+
+
+
+	
+
+
+
+</div></div>{% endblock %}
+
+
+

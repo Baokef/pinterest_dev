@@ -5,13 +5,9 @@ namespace App\Controller;
 use App\Entity\Pin;
 use App\Repository\PinRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Repository\VideoRepository;
-
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use App\Form\PinType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,21 +33,7 @@ class PinController extends AbstractController
         
         return $this->render('pin/index.html.twig', ['pins' => $repo->findAll()]);
     }
-    /**
-     * @Route("/pin/account", name="app_pin_account", methods= {"GET","POST"})
-     */
-    public function account(ManagerRegistry $doctrine, PinRepository $repo): Response
-    {
-        if (!$this->getUser()) {
-            $this->addFlash('error', 'already connected !');
-            return $this->redirectToRoute('app_login');
-        } {
-
-            return $this->render('pin/account.html.twig', [
-                'pins' => $repo->findAll(),
-            ]);
-        }
-    }
+   
     /**
      * @Route("/pin/{id<[0-9]+>}", name="app_pin_show", methods="GET")
      */
