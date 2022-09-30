@@ -5,44 +5,61 @@
 {% endblock %}
 
 {% block body %}
+	<div class="row">
 
-	
+		<div class="col-4 text-center">
+			<h1>
+				Profile</h1>
 
-
-
-		<div class="row">
-
-			<div class="col-4 text-center">
-            <h1> Profile</h1>
-<img src={{app.user.photo}} width="200" height="300">
+			<img width="400px" height="500px" src={{vich_uploader_asset(app.user)}}>
 
 
-
-<p>{{ app.user.email }}</p>
-<h2>{{ app.user.firstname ~" "~ app.user.lastname }}</h2>
-<p>Account created on
-	{{ app.user.createdAt|date }}</p>
-
-
-	<div class="edit">
-<a href="{{ path('app_account_edit')}}">Editer</a>
-
-		<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-account-delete-form').submit();">Delete |</a>
-		<a href="{{ path('app_home') }}">Go Back</a>
-	 <form id="js-account-delete-form" action="{{ path('app_account_delete', {id: app.user.id}) }}" method="post" style="display:none;">
-			<input type="hidden" name="_method" value="DELETE">
-		</form> 
-	</div>
+			<p>{{ app.user.email }}</p>
+			<h2>{{ app.user.firstname ~" "~ app.user.lastname }}</h2>
+			<p>Account created on
+				{{ app.user.createdAt|date }}</p>
 
 
+			<div class="edit">
+				<a href="{{ path('app_account_edit')}}">Editer</a>
 
+				<a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-account-delete-form').submit();">Delete |</a>
+				<a href="{{ path('app_home') }}">Go Back</a>
+				<form id="js-account-delete-form" action="{{ path('app_account_delete', {id: app.user.id}) }}" method="post" style="display:none;">
+					<input type="hidden" name="_method" value="DELETE">
+				</form>
+			</div>
+		</div>
+<div class="container">
+	<div class="row">
+		{% for pin in pins %}
+			{% if pin.user==app.user   %}
 
+			<article class="col-3">
+				<h2>
+					<a href="{{ path('app_pin_show', {id: pin.id}) }}">{{ pin.title }}
+					</a>
+				</h2>
 
-	
+				<img src={{pin.imageName}} width="200" height="200">
 
+				<p>{{ pin.description|u.truncate(10,'...',false) }}</p>
+				<p>il y'a
+					{{ pin.createdAt|ago }}</p>
+				<p>By
+					{{pin.user.firstname~" "~pin.user.lastname }}
+				</p>
 
+{% endif %}
 
-</div></div>{% endblock %}
+			</article>
+		{% else %}
+			<p>
+				Sorry, no pin yet
+			</p>
+		{% endfor %}
 
+		
 
-
+		
+	{% endblock %}

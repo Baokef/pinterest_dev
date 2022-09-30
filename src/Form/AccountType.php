@@ -6,6 +6,10 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Pin;
+
+
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AccountType extends AbstractType
 {
@@ -15,7 +19,11 @@ class AccountType extends AbstractType
             ->add('email')
             ->add('firstname')
             ->add('lastname')
-            ->add('photo');
+            ->add('imageFile', VichImageType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'download_link'=> true
+            ]);
            
     }
 

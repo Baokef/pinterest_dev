@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Account edit !
-
-{% endblock %}
+{% block title 'Update Profile' %}
 
 {% block body %}
 	<div class="row">
-	<div class="col-4 text-center">
-						
-
-</div>
-
-			{{ include('account/_form.html.twig', {'submitButtonText': 'Update Account'}) }}
+		<div class="col-md-6 mx-auto">
+			<h1 class="text-center my-5">Update Profile</h1>
+			{{ form_start(monForm) }}
+			{{ form_row(monForm.firstname)}}
+			{{ form_row(monForm.lastname)}}
+			{{ form_row(monForm.email)}}
+			{{ form_row(monForm.imageFile)}}
+			<button type="submit" class="btn btn-primary">Apply changes
+			</button>
+			{{ form_end(monForm) }}
 		</div>
 	</div>
-
 {% endblock %}
-

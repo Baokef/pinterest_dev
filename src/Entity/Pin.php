@@ -3,14 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\PinRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Traits\Timestampable;
+
 /**
  * @ORM\Entity(repositoryClass=PinRepository::class)
  * @ORM\Table(name="pins")
  * @ORM\HasLifecycleCallbacks
- * 
+ * @ApiResource()
  */
 class Pin
 {
